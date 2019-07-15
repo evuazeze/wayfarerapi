@@ -4,7 +4,9 @@
   "description": "WayFarer is a public bus transportation booking server",
   "main": "src/app.js",
   "scripts": {
-    "test": "npm run test"
+    "lint": "esw src --color",
+    "lint:watch": "npm run lint -- --watch",
+    "test": "mocha src/tests/**/*.spec.js --exit"
   },
   "repository": {
     "type": "git",
@@ -21,10 +23,15 @@
     "url": "https://github.com/evuazeze/wayfarerapi/issues"
   },
   "homepage": "https://github.com/evuazeze/wayfarerapi#readme",
-  "dependencies": {},
+  "dependencies": {
+    "chai": "^4.2.0"
+  },
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-plugin-import": "^2.18.0"
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-watch": "2.1.14",
+    "mocha": "^1.0.0-alpha.2",
+    "sinon": "^7.3.2"
   }
 }
