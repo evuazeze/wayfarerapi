@@ -1,0 +1,30 @@
+{
+  "name": "wayfarerapi",
+  "version": "1.0.0",
+  "description": "WayFarer is a public bus transportation booking server",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evuazeze/wayfarerapi.git"
+  },
+  "keywords": [
+    "wayfarerapi",
+    "andela",
+    "node"
+  ],
+  "author": "Emmanuel Evuazeze",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/evuazeze/wayfarerapi/issues"
+  },
+  "homepage": "https://github.com/evuazeze/wayfarerapi#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.0"
+  }
+}
