@@ -73,4 +73,18 @@ describe('Trip Tests', () => {
       res.status.calledWith(200).should.equal(true);
     });
   });
+
+  describe('PATCH /trips/:tripId', () => {
+    it('admin should be able to cancel a trip', async () => {
+      // eslint-disable-next-line no-unused-vars
+      const req = {};
+
+      const res = {
+        status: sinon.spy(),
+        send: sinon.spy(),
+      };
+
+      res.status.calledWith(200).should.equal(true);
+    });
+  });
 });
