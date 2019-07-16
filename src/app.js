@@ -1,3 +1,8 @@
+if (process.env.NODE_ENV !== 'production') {
+  // eslint-disable-next-line global-require,import/no-extraneous-dependencies
+  require('dotenv').config();
+}
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
@@ -9,7 +14,11 @@ const swaggerDocument = require('.././swagger.json');
 
 const db = require('./db/db');
 
+const authController = require('./controllers/auth.controller')(db, jwt, bcrypt);
+
 const auth = require('./routes/auth.router')(db, jwt, bcrypt);
+
+const trip = require('./routes/trip.router')();
 
 app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
@@ -28,6 +37,8 @@ app.get('/', async (req, res) => {
 });
 
 app.use('/api/v1/auth', auth);
+
+app.use('/api/v1/trips', authController.authenticate, trip);
 
 app.server = app.listen(port, () => {
   // eslint-disable-next-line no-console
