@@ -7,7 +7,7 @@ const bookingController = (db) => {
 
     let hasErrors = false;
 
-    if (!tripId || !busId) {
+    if (!tripId) {
       hasErrors = true;
     }
 
