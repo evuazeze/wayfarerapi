@@ -7,7 +7,7 @@
     "contact": {}
   },
   "host": "localhost:4000",
-  "basePath": "/api/v1/auth",
+  "basePath": "/api/v1",
   "schemes": [
     "http"
   ],
@@ -18,14 +18,14 @@
     "application/json"
   ],
   "paths": {
-    "/signup": {
+    "/auth/signup": {
       "post": {
         "description": "This route enables new users to sign up",
         "summary": "/api/v1/auth/signup",
         "tags": [
           "Misc"
         ],
-        "operationId": "SignupPost",
+        "operationId": "AuthSignupPost",
         "deprecated": false,
         "produces": [
           "application/json"
@@ -56,14 +56,14 @@
         }
       }
     },
-    "/signin": {
+    "/auth/signin": {
       "post": {
         "description": "Enables users to signin",
         "summary": "/api/v1/auth/signin",
         "tags": [
           "Misc"
         ],
-        "operationId": "SigninPost",
+        "operationId": "AuthSigninPost",
         "deprecated": false,
         "produces": [
           "application/json"
@@ -83,6 +83,44 @@
             "description": "",
             "schema": {
               "$ref": "#/definitions/~1api~1v1~1auth~1signinrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/trips": {
+      "post": {
+        "description": "Enable Admin to post a trip",
+        "summary": "/api/v1/trips",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "TripsPost",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/~1api~1v1~1tripsrequest"
             }
           }
         ],
@@ -149,6 +187,87 @@
       "required": [
         "email",
         "password"
+      ]
+    },
+    "/api/v1/tripsrequest": {
+      "title": "/api/v1/tripsrequest",
+      "example": {
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI5fQ.Bo3bgQh5QDjEJ_135QJftjBLK9tEAeEdV4FDYaYo-FU",
+        "user_id": 29,
+        "is_admin": true,
+        "data": {
+          "bus_id": 1,
+          "origin": "Delta",
+          "destination": "USA",
+          "trip_date": "2019-07-30",
+          "fare": 3500,
+          "status": 1
+        }
+      },
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "is_admin": {
+          "type": "boolean"
+        },
+        "data": {
+          "$ref": "#/definitions/Data"
+        }
+      },
+      "required": [
+        "token",
+        "user_id",
+        "is_admin",
+        "data"
+      ]
+    },
+    "Data": {
+      "title": "Data",
+      "example": {
+        "bus_id": 1,
+        "origin": "Delta",
+        "destination": "USA",
+        "trip_date": "2019-07-30",
+        "fare": 3500,
+        "status": 1
+      },
+      "type": "object",
+      "properties": {
+        "bus_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "origin": {
+          "type": "string"
+        },
+        "destination": {
+          "type": "string"
+        },
+        "trip_date": {
+          "type": "string"
+        },
+        "fare": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "bus_id",
+        "origin",
+        "destination",
+        "trip_date",
+        "fare",
+        "status"
       ]
     }
   },
