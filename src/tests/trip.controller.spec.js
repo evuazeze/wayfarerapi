@@ -1,36 +1,42 @@
 const sinon = require('sinon');
 const chai = require('chai');
+const db = require('../db/db');
+const tripController = require('../controllers/trip.controller');
 
 chai.should();
 
 
 describe('Trip Tests', () => {
   describe('POST /trips', () => {
-    it.skip('admin should be able to create a trip', () => {
-    // eslint-disable-next-line no-unused-vars
+    let fakedb;
+    before(() => {
+      fakedb = sinon.stub(db);
+      fakedb.query.returns({ rows: [{ email: 'esther@gmail.com' }] });
+    });
+
+    it('admin should be able to create a trip', async () => {
       const req = {
         body: {
-          token: '123',
-          user_id: 1,
-          is_admin: false,
+          is_admin: true,
           data: {
-
+            bus_id: sinon.spy(),
+            origin: sinon.spy(),
+            destination: sinon.spy(),
+            trip_date: sinon.spy(),
+            fare: sinon.spy(),
           },
         },
       };
 
       const res = {
         status: sinon.spy(),
-        data: {
-          trip_id: sinon.spy(),
-          bus_id: sinon.spy(),
-          origin: sinon.spy(),
-          destination: sinon.spy(),
-          trip_date: sinon.spy(),
-          fare: sinon.spy(),
-        },
+        send: sinon.spy(),
       };
 
+      const controller = tripController(fakedb);
+      await controller.postTrip(req, res);
+
+      fakedb.query.calledTwice.should.equal(true);
       res.status.calledWith(201).should.equal(true);
     });
   });

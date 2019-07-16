@@ -1,8 +1,11 @@
 const tripController = (db) => {
   const postTrip = async (req, res) => {
-    const tripData = req.body.data;
+    if (req.body.is_admin === false) {
+      res.status(401)
+      return res.send({ status: 401, error: 'Unauthorize. Not an Admin' });
+    }
 
-    if (req.body.is_admin === false) return res.status(401).send({ status: 401, error: 'Unauthorize. Not an Admin' });
+    const tripData = req.body.data;
 
     let hasErrors = false;
 
@@ -58,7 +61,8 @@ const tripController = (db) => {
       },
     };
 
-    return res.status(201).send(response);
+    res.status(201)
+    return res.send(response);
   };
 
   return { postTrip };
