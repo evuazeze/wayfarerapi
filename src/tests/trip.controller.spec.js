@@ -14,6 +14,11 @@ describe('Trip Tests', () => {
       fakedb.query.returns({ rows: [{ email: 'esther@gmail.com' }] });
     });
 
+    after(() => {
+      fakedb.query.restore();
+    });
+
+
     it('admin should be able to create a trip', async () => {
       const req = {
         body: {
@@ -42,7 +47,17 @@ describe('Trip Tests', () => {
   });
 
   describe('GET /trips', () => {
-    it.skip('user and admin should be able to retrieve trips', () => {
+    let fakedb;
+    before(() => {
+      fakedb = sinon.stub(db);
+      fakedb.query.returns({ rows: [{ id: 1, origin: 'Lagos' }] });
+    });
+
+    after(() => {
+      fakedb.query.restore();
+    });
+
+    it('user and admin should be able to retrieve trips', async () => {
       // eslint-disable-next-line no-unused-vars
       const req = {};
 
@@ -51,7 +66,11 @@ describe('Trip Tests', () => {
         send: sinon.spy(),
       };
 
-      res.status.calledWith(200).should.equal(true, 'Successfully sent response');
+      const controller = tripController(fakedb);
+      await controller.getTrips(req, res);
+
+      fakedb.query.calledOnce.should.equal(true);
+      res.status.calledWith(200).should.equal(true);
     });
   });
 });
