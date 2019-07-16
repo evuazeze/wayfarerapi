@@ -1,7 +1,7 @@
 const tripController = (db) => {
   const postTrip = async (req, res) => {
     if (req.body.is_admin === false) {
-      res.status(401)
+      res.status(401);
       return res.send({ status: 401, error: 'Unauthorize. Not an Admin' });
     }
 
@@ -10,7 +10,7 @@ const tripController = (db) => {
     let hasErrors = false;
 
     if (!tripData.bus_id || !tripData.origin
-        || !tripData.destination || !tripData.trip_date || !tripData.fare) {
+      || !tripData.destination || !tripData.trip_date || !tripData.fare) {
       hasErrors = true;
     }
 
@@ -61,11 +61,26 @@ const tripController = (db) => {
       },
     };
 
-    res.status(201)
+    res.status(201);
     return res.send(response);
   };
 
-  return { postTrip };
+  const getTrips = async (req, res) => {
+    const { rows } = await db.query('SELECT * FROM "trip"', []);
+
+    if (!rows) {
+      res.status(400);
+      res.send({ message: 'Error getting trips' });
+    }
+
+    // eslint-disable-next-line camelcase
+    const reshapedRows = rows.map(({ id: trip_id, ...rest }) => ({ trip_id, ...rest }));
+
+    res.status(200);
+    return res.send({ status: 200, data: reshapedRows });
+  };
+
+  return { postTrip, getTrips };
 };
 
 module.exports = tripController;

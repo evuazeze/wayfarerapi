@@ -130,6 +130,33 @@
             "headers": {}
           }
         }
+      },
+      "get": {
+        "description": "Enables Users and Admins to get a trips",
+        "summary": "/api/v1/trips",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "TripsGet",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
       }
     }
   },
