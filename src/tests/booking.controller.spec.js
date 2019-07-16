@@ -1,19 +1,30 @@
 const sinon = require('sinon');
 const chai = require('chai');
 
+const db = require('../db/db');
+const bookingController = require('../controllers/booking.controller');
+
 chai.should();
 
 describe('Booking Tests', () => {
   describe('POST /bookings', () => {
-    it('user should be able to book a seat on a trip', async () => {
+    let fakedb;
+    before(() => {
+      fakedb = sinon.stub(db);
+      fakedb.query.returns({ rows: [{ user_id: 2, trip_id: 1 }] });
+    });
+
+    after(() => {
+      fakedb.query.restore();
+    });
+
+    it.only('should return 409 if user already booked', async () => {
       // eslint-disable-next-line no-unused-vars
       const req = {
         body: {
-          token: 'wert',
-          user_id: 12,
-          is_admin: false,
           trip_id: 2,
-          bus_id: 1,
+          user_id: 2,
+          bus_id: 2,
         },
       };
 
@@ -22,7 +33,10 @@ describe('Booking Tests', () => {
         send: sinon.spy(),
       };
 
-      res.status.calledWith(201).should.equal(true);
+      const controller = bookingController(fakedb);
+      await controller.bookSeat(req, res);
+
+      res.status.calledWith(409).should.equal(true);
     });
   });
 

@@ -23,7 +23,10 @@ const bookingController = (db) => {
 
     const bookingStatus = checkBookStatusResult.rows[0];
 
-    if (bookingStatus) return res.status(409).send({ status: 409, error: 'Trip already booked by User' });
+    if (bookingStatus) {
+      res.status(409)
+      return res.send({ status: 409, error: 'Trip already booked by User' });
+    }
 
     // let text = 'SELECT id FROM "bus" WHERE id = $1';
     // let values = [busId];
