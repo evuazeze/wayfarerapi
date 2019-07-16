@@ -72,7 +72,7 @@ const bookingController = (db) => {
     const response = {
       status: 201,
       data: {
-        booking_id: booking.id,
+        id: booking.id,
         user_id: userId,
         trip_id: tripId,
         bus_id: busId,
