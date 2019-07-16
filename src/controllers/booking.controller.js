@@ -16,6 +16,15 @@ const bookingController = (db) => {
       return res.send({ status: 400, error: 'Bad Request Data' });
     }
 
+    let text = 'SELECT user_id, trip_id FROM "booking" WHERE user_id = $1 AND trip_id = $2';
+    let values = [userId, tripId];
+
+    const checkBookStatusResult = await db.query(text, values);
+
+    const bookingStatus = checkBookStatusResult.rows[0];
+
+    if (bookingStatus) return res.status(409).send({ status: 409, error: 'Trip already booked by User' });
+
     // let text = 'SELECT id FROM "bus" WHERE id = $1';
     // let values = [busId];
     //
@@ -34,8 +43,8 @@ const bookingController = (db) => {
     //
     // if (!trip) return res.status(404).send({ status: 404, error: 'No such trip' });
 
-    let text = 'SELECT first_name, last_name, email FROM "user" WHERE id = $1';
-    let values = [userId];
+    text = 'SELECT first_name, last_name, email FROM "user" WHERE id = $1';
+    values = [userId];
 
     const userResult = await db.query(text, values);
 
