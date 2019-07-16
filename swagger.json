@@ -55,6 +55,44 @@
           }
         }
       }
+    },
+    "/signin": {
+      "post": {
+        "description": "Enables users to signin",
+        "summary": "/api/v1/auth/signin",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "SigninPost",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/~1api~1v1~1auth~1signinrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -91,6 +129,26 @@
         "first_name",
         "last_name",
         "is_admin"
+      ]
+    },
+    "/api/v1/auth/signinrequest": {
+      "title": "/api/v1/auth/signinrequest",
+      "example": {
+        "email": "evuazeze.emmanuel@gmail.com",
+        "password": "1234"
+      },
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "email",
+        "password"
       ]
     }
   },
