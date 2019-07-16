@@ -75,7 +75,7 @@ describe('Trip Tests', () => {
   });
 
   describe('PATCH /trips/:tripId', () => {
-    it('admin should be able to cancel a trip', async () => {
+    it.skip('admin should be able to cancel a trip', async () => {
       // eslint-disable-next-line no-unused-vars
       const req = {};
 

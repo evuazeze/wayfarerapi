@@ -18,7 +18,7 @@ describe('Booking Tests', () => {
       fakedb.query.restore();
     });
 
-    it.only('should return 409 if user already booked', async () => {
+    it('should return 409 if user already booked', async () => {
       // eslint-disable-next-line no-unused-vars
       const req = {
         body: {
@@ -41,7 +41,7 @@ describe('Booking Tests', () => {
   });
 
   describe('GET /bookings', () => {
-    it('user should be able to see her bookings and admin see all bookings', async () => {
+    it.skip('user should be able to see her bookings and admin see all bookings', async () => {
       // eslint-disable-next-line no-unused-vars
       const req = {};
 
@@ -56,7 +56,7 @@ describe('Booking Tests', () => {
   });
 
   describe('DELETE /bookings/:bookingId', () => {
-    it('user admin should be able to delete their booking', async () => {
+    it.skip('user admin should be able to delete their booking', async () => {
       // eslint-disable-next-line no-unused-vars
       const req = {};
 
