@@ -6,7 +6,7 @@ chai.should();
 
 describe('Trip Tests', () => {
   describe('POST /trips', () => {
-    it('admin should be able to create a trip', () => {
+    it.skip('admin should be able to create a trip', () => {
     // eslint-disable-next-line no-unused-vars
       const req = {
         body: {
@@ -36,7 +36,7 @@ describe('Trip Tests', () => {
   });
 
   describe('GET /trips', () => {
-    it('user and admin should be able to retrieve trips', () => {
+    it.skip('user and admin should be able to retrieve trips', () => {
       // eslint-disable-next-line no-unused-vars
       const req = {};
 
