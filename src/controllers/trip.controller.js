@@ -7,17 +7,17 @@ const tripController = (db) => {
 
     const tripData = req.body.data;
 
-    let hasErrors = false;
-
-    if (!tripData.bus_id || !tripData.origin
-      || !tripData.destination || !tripData.trip_date || !tripData.fare) {
-      hasErrors = true;
-    }
-
-    if (hasErrors) {
-      res.status(400);
-      return res.send({ status: 400, error: 'Bad Request Data' });
-    }
+    // let hasErrors = false;
+    //
+    // if (!tripData.bus_id || !tripData.origin
+    //   || !tripData.destination || !tripData.trip_date || !tripData.fare) {
+    //   hasErrors = true;
+    // }
+    //
+    // if (hasErrors) {
+    //   res.status(400);
+    //   return res.send({ status: 400, error: 'Bad Request Data' });
+    // }
 
     if (!Object.prototype.hasOwnProperty.call(tripData, 'status')) {
       tripData.status = 1;
