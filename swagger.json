@@ -158,6 +158,44 @@
           }
         }
       }
+    },
+    "/bookings": {
+      "post": {
+        "description": "Enable Users book a seat",
+        "summary": "/api/v1/bookings",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "BookingsPost",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/~1api~1v1~1bookingsrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -295,6 +333,50 @@
         "trip_date",
         "fare",
         "status"
+      ]
+    },
+    "/api/v1/bookingsrequest": {
+      "title": "/api/v1/bookingsrequest",
+      "example": {
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI5fQ.Bo3bgQh5QDjEJ_135QJftjBLK9tEAeEdV4FDYaYo-FU",
+        "user_id": 29,
+        "is_admin": false,
+        "trip_id": 50,
+        "bus_id": 9,
+        "seat_number": 1
+      },
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "is_admin": {
+          "type": "boolean"
+        },
+        "trip_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "bus_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "seat_number": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "token",
+        "user_id",
+        "is_admin",
+        "trip_id",
+        "bus_id",
+        "seat_number"
       ]
     }
   },
