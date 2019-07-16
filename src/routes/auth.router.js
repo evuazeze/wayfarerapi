@@ -8,6 +8,9 @@ const routes = (db, jwt, bcrypt) => {
   authRouter.route('/signup')
     .post(controller.signup);
 
+  authRouter.route('/signin')
+    .post(controller.signin);
+
   return authRouter;
 };
 

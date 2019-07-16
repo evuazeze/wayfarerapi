@@ -40,48 +40,76 @@ const authController = (db, jwt, bcrypt) => {
       return res.send({ status: 400, error: 'Bad Request Data' });
     }
 
-    let text = 'SELECT email FROM "user" WHERE email = $1';
-    let values = [userData.email];
-    let result;
+    const text = 'SELECT email FROM "user" WHERE email = $1';
+    // eslint-disable-next-line max-len
+    const values = [userData.email];
 
-    result = await db.query(text, values);
+    const result = await db.query(text, values);
 
-    const user = result.rows[0];
+    const fetchEmail = result.rows[0];
 
-    if (user.email === userData.email) {
+    console.log(fetchEmail);
+
+    if (fetchEmail && (fetchEmail.email === userData.email)) {
       res.status(409);
-      return res.send({ status: 409, error: 'This email already exists' });
+      return res.send({ status: 409, error: 'Email already exists' });
     }
 
     // assign default value to is_admin
     if (!userData.is_admin) userData.is_admin = false;
 
     // hash password
-    await bcrypt.hash(userData.password, null, null, (err, hash) => {
-      if (!err) {
-        userData.password = hash;
+    // eslint-disable-next-line consistent-return
+    bcrypt.hash(userData.password, null, null, async (err, hash) => {
+      if (err) {
+        res.status(500);
+        return res.send({ status: 500, error: 'Error saving user' });
       }
+
+      const insertText = 'INSERT INTO "user"(email, first_name, last_name, password, is_admin) VALUES($1, $2, $3, $4, $5) RETURNING *';
+      // eslint-disable-next-line max-len
+      const insertValues = [userData.email, userData.first_name, userData.last_name, hash, userData.is_admin];
+
+      const { rows } = await db.query(insertText, insertValues);
+
+      if (!rows) {
+        res.status(500);
+        return res.send({ status: 500, error: 'Error saving user' });
+      }
+
+      req.body.id = rows[0].id;
+
+      createSendToken(res, req.body, 201);
     });
 
-    text = 'INSERT INTO "user"(email, first_name, last_name, password, is_admin) VALUES($1, $2, $3, $4, $5) RETURNING *';
-    // eslint-disable-next-line max-len
-    values = [userData.email, userData.first_name, userData.last_name, userData.password, userData.is_admin];
-
-    result = await db.query(text, values);
-
-    const insertedUser = result.rows[0];
-
-    if (!insertedUser) {
-      res.status(500);
-      return res.send({ status: 500, error: 'Error saving user' });
-    }
-
-    req.body.id = insertedUser.id;
-
-    return createSendToken(res, req.body, 201);
+    return 0;
   };
 
-  return { signup };
+  const signin = async (req, res) => {
+    const loginData = req.body;
+
+    const text = 'SELECT * FROM "user" WHERE email = $1';
+    const values = [loginData.email];
+
+    const { rows } = await db.query(text, values);
+
+    if (!rows[0]) {
+      res.status(401);
+      return res.send({ status: 401, error: 'Email or Password Invalid' });
+    }
+
+    const user = rows[0];
+    // eslint-disable-next-line consistent-return
+    bcrypt.compare(loginData.password, user.password, (err, isMatch) => {
+      if (!isMatch) return res.status(401).send({ status: 401, error: 'Email or Password Invalid' });
+    });
+
+    createSendToken(res, user, 200);
+
+    return 0;
+  };
+
+  return { signup, signin };
 };
 
 module.exports = authController;
