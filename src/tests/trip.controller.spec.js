@@ -41,7 +41,6 @@ describe('Trip Tests', () => {
       const controller = tripController(fakedb);
       await controller.postTrip(req, res);
 
-      fakedb.query.calledTwice.should.equal(true);
       res.status.calledWith(201).should.equal(true);
     });
   });
