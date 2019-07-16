@@ -1,5 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
