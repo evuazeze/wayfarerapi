@@ -51,7 +51,7 @@ const tripController = (db) => {
     const response = {
       status: 201,
       data: {
-        id: savedTrip.id,
+        trip_id: savedTrip.id,
         bus_id: savedTrip.bus_id,
         origin: savedTrip.origin,
         destination: savedTrip.destination,

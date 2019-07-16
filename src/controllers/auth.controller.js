@@ -130,7 +130,8 @@ const authController = (db, jwt, bcrypt) => {
 
     req.userId = payload.sub;
 
-    if (req.userId !== req.body.user_id) return res.status(401).send({ status: 401, error: 'Unauthorized. Invalid Authentication Data' });
+    // eslint-disable-next-line max-len
+    // if (req.userId !== req.body.user_id) return res.status(401).send({ status: 401, error: 'Unauthorized. Invalid Authentication Data' });
 
     return next();
   };
