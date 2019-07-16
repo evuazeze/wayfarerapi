@@ -1,1 +1,103 @@
-{}
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "Wayfarer",
+    "description": "WayFarer is a public bus transportation booking server and you are looking at it's documentation.",
+    "contact": {}
+  },
+  "host": "localhost:4000",
+  "basePath": "/api/v1/auth",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/signup": {
+      "post": {
+        "description": "This route enables new users to sign up",
+        "summary": "/api/v1/auth/signup",
+        "tags": [
+          "Misc"
+        ],
+        "operationId": "SignupPost",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/~1api~1v1~1auth~1signuprequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "/api/v1/auth/signuprequest": {
+      "title": "/api/v1/auth/signuprequest",
+      "example": {
+        "email": "evuazeze.emmanuel@gmail.com",
+        "password": "1234",
+        "first_name": "Emmanuel",
+        "last_name": "Evuazeze",
+        "is_admin": true
+      },
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "is_admin": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "email",
+        "password",
+        "first_name",
+        "last_name",
+        "is_admin"
+      ]
+    }
+  },
+  "tags": [
+    {
+      "name": "Misc",
+      "description": ""
+    }
+  ]
+}
