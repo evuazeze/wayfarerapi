@@ -1,9 +1,9 @@
 const tripController = (db) => {
   const postTrip = async (req, res) => {
-    if (req.body.is_admin === false) {
-      res.status(401);
-      return res.send({ status: 401, error: 'Unauthorize. Not an Admin' });
-    }
+    // if (req.body.is_admin === false) {
+    //   res.status(401);
+    //   return res.send({ status: 401, error: 'Unauthorize. Not an Admin' });
+    // }
 
     const tripData = req.body.data;
 
