@@ -48,8 +48,6 @@ const authController = (db, jwt, bcrypt) => {
 
     const fetchEmail = result.rows[0];
 
-    console.log(fetchEmail);
-
     if (fetchEmail && (fetchEmail.email === userData.email)) {
       res.status(409);
       return res.send({ status: 409, error: 'Email already exists' });
@@ -109,7 +107,36 @@ const authController = (db, jwt, bcrypt) => {
     return 0;
   };
 
-  return { signup, signin };
+  const authenticate = (req, res, next) => {
+    const authData = req.body;
+
+    // if (!Object.prototype.hasOwnProperty.call(req.body, 'is_admin')) return res.status(401).send({ status: 401, error: 'Unauthorized. Missing is_admin property' });
+
+    // validate request data
+    let hasErrors = false;
+
+    if (!authData.token || !authData.user_id) {
+      hasErrors = true;
+    }
+
+    if (hasErrors) {
+      res.status(400);
+      return res.send({ status: 400, error: 'Unauthorized. Bad Request Data' });
+    }
+
+    const { token } = authData;
+
+    const payload = jwt.decode(token, process.env.PAYLOAD_SECRET);
+
+    req.userId = payload.sub;
+
+    if (req.userId !== req.body.user_id) return res.status(401).send({ status: 401, error: 'Unauthorized. Invalid Authentication Data' });
+
+    return next();
+  };
+
+
+  return { signup, signin, authenticate };
 };
 
 module.exports = authController;
