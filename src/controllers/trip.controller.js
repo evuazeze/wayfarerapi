@@ -23,21 +23,21 @@ const tripController = (db) => {
       tripData.status = 1;
     }
 
-    let text = 'SELECT id FROM "bus" WHERE id = $1';
-    let values = [tripData.bus_id];
-    let result;
+    // let text = 'SELECT id FROM "bus" WHERE id = $1';
+    // let values = [tripData.bus_id];
+    // let result;
+    //
+    // result = await db.query(text, values);
+    //
+    // const busRows = result.rows;
+    //
+    // if (!busRows[0]) return res.status(404).send({ status: 404, error: 'Bus does not exist' });
 
-    result = await db.query(text, values);
-
-    const busRows = result.rows;
-
-    if (!busRows[0]) return res.status(404).send({ status: 404, error: 'Bus does not exist' });
-
-    text = 'INSERT INTO "trip"(bus_id, origin, destination, trip_date, fare, status) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
+    const text = 'INSERT INTO "trip"(bus_id, origin, destination, trip_date, fare, status) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
     // eslint-disable-next-line max-len
-    values = [tripData.bus_id, tripData.origin, tripData.destination, new Date(tripData.trip_date), tripData.fare, tripData.status];
+    const values = [tripData.bus_id, tripData.origin, tripData.destination, new Date(tripData.trip_date), tripData.fare, tripData.status];
 
-    result = await db.query(text, values);
+    const result = await db.query(text, values);
 
     const tripRows = result.rows;
 
