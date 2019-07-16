@@ -115,7 +115,7 @@ const authController = (db, jwt, bcrypt) => {
     // validate request data
     let hasErrors = false;
 
-    if (!authData.token || !authData.user_id) {
+    if (!authData.token) {
       hasErrors = true;
     }
 
