@@ -1,11 +1,13 @@
 const sinon = require('sinon');
 const chai = require('chai');
+const db = require('../db/db');
+const authController = require('../controllers/auth.controller');
 
 chai.should();
 
 describe('Sign up and Sign in Tests', () => {
   describe('POST /auth/signup', () => {
-    it('should be able to sign up new user', () => {
+    it.only('should be able to sign up new user', async () => {
       // eslint-disable-next-line no-unused-vars
       const req = {
         body: {
@@ -21,8 +23,22 @@ describe('Sign up and Sign in Tests', () => {
         send: sinon.spy(),
       };
 
+      const fakedb = sinon.stub(db);
+      fakedb.query.returns({ rows: [{ email: 'esther@gmail.com' }] });
+
+      const bcrypt = {
+        hash: sinon.spy(),
+      };
+
+      const jwt = {
+        encode: sinon.stub(),
+      };
+
+      const controller = authController(fakedb, jwt, bcrypt);
+      await controller.signup(req, res);
+
       res.status.calledWith(201).should.equal(true);
-      res.send.calledOnce.should.equal(true);
+      fakedb.query.calledTwice.should.equal(true);
     });
   });
 
