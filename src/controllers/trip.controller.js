@@ -38,7 +38,7 @@ const tripController = (db) => {
 
     const text = 'INSERT INTO "trip"(bus_id, origin, destination, trip_date, fare, status) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
     // eslint-disable-next-line max-len
-    const values = [tripData.bus_id, tripData.origin, tripData.destination, new Date(tripData.trip_date), tripData.fare, tripData.status];
+    const values = [tripData.bus_id, tripData.origin, tripData.destination, tripData.trip_date, tripData.fare, tripData.status];
 
     const result = await db.query(text, values);
 

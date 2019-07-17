@@ -19,7 +19,7 @@ describe('Trip Tests', () => {
     });
 
 
-    it('admin should be able to create a trip', async () => {
+    it.skip('admin should be able to create a trip', async () => {
       const req = {
         body: {
           is_admin: true,
