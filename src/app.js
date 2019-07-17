@@ -38,7 +38,7 @@ app.get('/', async (req, res) => {
 
 app.use('/api/v1/auth', auth);
 
-app.use('/api/v1/trips', trip);
+app.use('/api/v1/trips', authController.authenticate, trip);
 
 app.use('/api/v1/bookings', authController.authenticate, booking);
 
