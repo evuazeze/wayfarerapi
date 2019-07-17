@@ -20,9 +20,9 @@ const tripController = (db) => {
     //   return res.send({ status: 400, error: 'Bad Request Data' });
     // }
 
-    if (!Object.prototype.hasOwnProperty.call(tripData, 'status')) {
-      tripData.status = 1;
-    }
+    // if (!Object.prototype.hasOwnProperty.call(tripData, 'status')) {
+    //   tripData.status = 1;
+    // }
 
     // let text = 'SELECT id FROM "bus" WHERE id = $1';
     // let values = [tripData.bus_id];
@@ -44,10 +44,10 @@ const tripController = (db) => {
 
     const tripRows = result.rows;
 
-    if (!tripRows) {
-      res.status(500);
-      return res.send({ status: 500, error: 'Error saving trip' });
-    }
+    // if (!tripRows) {
+    //   res.status(500);
+    //   return res.send({ status: 500, error: 'Error saving trip' });
+    // }
 
     const savedTrip = tripRows[0];
 
@@ -59,8 +59,8 @@ const tripController = (db) => {
         origin: savedTrip.origin,
         destination: savedTrip.destination,
         trip_date: savedTrip.trip_date,
-        fare: savedTrip.fare,
-        status: savedTrip.status,
+        fare: savedTrip.fare
+        // status: savedTrip.status,
       },
     };
 
