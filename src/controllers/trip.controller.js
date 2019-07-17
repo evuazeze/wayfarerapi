@@ -1,5 +1,5 @@
 const tripController = (db) => {
-  const postTrip = async (req, res) => {
+  const postTrip = (req, res) => {
     // if (req.body.is_admin === false) {
     //   res.status(401);
     //   return res.send({ status: 401, error: 'Unauthorize. Not an Admin' });
@@ -36,38 +36,37 @@ const tripController = (db) => {
 
 
 
-    const text = 'INSERT INTO "trip"(bus_id, origin, destination, trip_date, fare, status) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
-    // eslint-disable-next-line max-len
-    const values = [tripData.bus_id, tripData.origin, tripData.destination, new Date(tripData.trip_date), tripData.fare, tripData.status];
-
-    let result;
-    try {
-      result = await db.query(text, values);
-    }
-    catch (error) {
-      res.status(500);
-      return res.send({ status: 500, error: 'Error saving trip' });
-    }
-
-    const tripRows = result.rows;
-
-    const savedTrip = tripRows[0];
-
-    const response = {
-      status: 201,
-      data: {
-        trip_id: savedTrip.id,
-        bus_id: savedTrip.bus_id,
-        origin: savedTrip.origin,
-        destination: savedTrip.destination,
-        trip_date: savedTrip.trip_date,
-        fare: savedTrip.fare,
-        // status: savedTrip.status,
-      },
-    };
+    // const text = 'INSERT INTO "trip"(bus_id, origin, destination, trip_date, fare, status) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
+    // // eslint-disable-next-line max-len
+    // const values = [tripData.bus_id, tripData.origin, tripData.destination, new Date(tripData.trip_date), tripData.fare, tripData.status];
+    //
+    // let result;
+    // try {
+    //   result = await db.query(text, values);
+    // } catch (error) {
+    //   res.status(500);
+    //   return res.send({ status: 500, error: 'Error saving trip' });
+    // }
+    //
+    // const tripRows = result.rows;
+    //
+    // const savedTrip = tripRows[0];
+    //
+    // const response = {
+    //   status: 201,
+    //   data: {
+    //     trip_id: savedTrip.id,
+    //     bus_id: savedTrip.bus_id,
+    //     origin: savedTrip.origin,
+    //     destination: savedTrip.destination,
+    //     trip_date: savedTrip.trip_date,
+    //     fare: savedTrip.fare,
+    //     // status: savedTrip.status,
+    //   },
+    // };
 
     res.status(201);
-    return res.send(response);
+    return res.send('trips');
   };
 
   // const getTrips = async (req, res) => {
