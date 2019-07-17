@@ -19,9 +19,9 @@ const tripController = (db) => {
     //   return res.send({ status: 400, error: 'Bad Request Data' });
     // }
 
-    if (!Object.prototype.hasOwnProperty.call(tripData, 'status')) {
-      tripData.status = 1;
-    }
+    // if (!Object.prototype.hasOwnProperty.call(tripData, 'status')) {
+    //   tripData.status = 1;
+    // }
 
     // let text = 'SELECT id FROM "bus" WHERE id = $1';
     // let values = [tripData.bus_id];
@@ -65,22 +65,22 @@ const tripController = (db) => {
     return res.send(response);
   };
 
-  const getTrips = async (req, res) => {
-    const { rows } = await db.query('SELECT * FROM "trip"', []);
+  // const getTrips = async (req, res) => {
+  //   const { rows } = await db.query('SELECT * FROM "trip"', []);
+  //
+  //   if (!rows) {
+  //     res.status(400);
+  //     res.send({ message: 'Error getting trips' });
+  //   }
+  //
+  //   // eslint-disable-next-line camelcase
+  //   const reshapedRows = rows.map(({ id: trip_id, ...rest }) => ({ trip_id, ...rest }));
+  //
+  //   res.status(200);
+  //   return res.send({ status: 200, data: reshapedRows });
+  // };
 
-    if (!rows) {
-      res.status(400);
-      res.send({ message: 'Error getting trips' });
-    }
-
-    // eslint-disable-next-line camelcase
-    const reshapedRows = rows.map(({ id: trip_id, ...rest }) => ({ trip_id, ...rest }));
-
-    res.status(200);
-    return res.send({ status: 200, data: reshapedRows });
-  };
-
-  return { postTrip, getTrips };
+  return { postTrip/*, getTrips*/ };
 };
 
 module.exports = tripController;
