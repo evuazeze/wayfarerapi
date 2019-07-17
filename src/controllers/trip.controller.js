@@ -5,9 +5,6 @@ const tripController = (db) => {
     //   return res.send({ status: 401, error: 'Unauthorize. Not an Admin' });
     // }
 
-    const tripData = req.body.data;
-
-
     // let hasErrors = false;
     //
     // if (!tripData.bus_id || !tripData.origin
@@ -69,22 +66,22 @@ const tripController = (db) => {
     return res.send(response);
   };
 
-  // const getTrips = async (req, res) => {
-  //   const { rows } = await db.query('SELECT * FROM "trip"', []);
-  //
-  //   if (!rows) {
-  //     res.status(400);
-  //     res.send({ message: 'Error getting trips' });
-  //   }
-  //
-  //   // eslint-disable-next-line camelcase
-  //   const reshapedRows = rows.map(({ id: trip_id, ...rest }) => ({ trip_id, ...rest }));
-  //
-  //   res.status(200);
-  //   return res.send({ status: 200, data: reshapedRows });
-  // };
+  const getTrips = async (req, res) => {
+    const { rows } = await db.query('SELECT * FROM "trip"', []);
 
-  return { postTrip/*, getTrips*/ };
+    if (!rows) {
+      res.status(400);
+      res.send({ message: 'Error getting trips' });
+    }
+
+    // eslint-disable-next-line camelcase
+    const reshapedRows = rows.map(({ id: trip_id, ...rest }) => ({ trip_id, ...rest }));
+
+    res.status(200);
+    return res.send({ status: 200, data: reshapedRows });
+  };
+
+  return { postTrip, getTrips };
 };
 
 module.exports = tripController;
