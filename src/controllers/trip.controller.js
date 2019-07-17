@@ -52,21 +52,21 @@ const tripController = (db) => {
     //
     // const savedTrip = tripRows[0];
     //
-    // const response = {
-    //   status: 201,
-    //   data: {
-    //     trip_id: savedTrip.id,
-    //     bus_id: savedTrip.bus_id,
-    //     origin: savedTrip.origin,
-    //     destination: savedTrip.destination,
-    //     trip_date: savedTrip.trip_date,
-    //     fare: savedTrip.fare,
-    //     // status: savedTrip.status,
-    //   },
-    // };
+    const response = {
+      status: 201,
+      data: {
+        // trip_id: savedTrip.id,
+        bus_id: req.body.bus_id,
+        origin: req.body.origin,
+        destination: req.body.destination,
+        trip_date: req.body.trip_date,
+        fare: req.body.fare,
+        // status: savedTrip.status,
+      },
+    };
 
     res.status(201);
-    return res.send('trips');
+    return res.send(response);
   };
 
   // const getTrips = async (req, res) => {
