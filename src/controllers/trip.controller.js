@@ -40,14 +40,16 @@ const tripController = (db) => {
     // eslint-disable-next-line max-len
     const values = [tripData.bus_id, tripData.origin, tripData.destination, new Date(tripData.trip_date), tripData.fare, tripData.status];
 
-    const result = await db.query(text, values);
-
-    const tripRows = result.rows;
-
-    if (!tripRows) {
+    let result;
+    try {
+      result = await db.query(text, values);
+    }
+    catch (error) {
       res.status(500);
       return res.send({ status: 500, error: 'Error saving trip' });
     }
+
+    const tripRows = result.rows;
 
     const savedTrip = tripRows[0];
 
