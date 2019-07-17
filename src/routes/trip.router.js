@@ -4,9 +4,9 @@ const tripController = require('../controllers/trip.controller')(db);
 
 const routes = () => {
   const tripRouter = express.Router();
-  // const { postTrip } = tripController;
-  // tripRouter.route('/')
-  //   .post(postTrip);
+  const { postTrip } = tripController;
+  tripRouter.route('/')
+    .post(postTrip);
 
   // tripRouter.route('/')
   //   .get(getTrips);
