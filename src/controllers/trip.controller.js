@@ -36,30 +36,30 @@ const tripController = (db) => {
 
 
 
-    const text = 'INSERT INTO "trip"(bus_id, origin, destination, trip_date, fare, status) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
+    // const text = 'INSERT INTO "trip"(bus_id, origin, destination, trip_date, fare, status) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
     // eslint-disable-next-line max-len
     const values = [tripData.bus_id, tripData.origin, tripData.destination, tripData.trip_date, tripData.fare, tripData.status];
 
-    const result = await db.query(text, values);
+    // const { rows } = await db.query(text, values);
 
-    const tripRows = result.rows;
+    // const tripRows = result.rows;
 
     // if (!tripRows) {
     //   res.status(500);
     //   return res.send({ status: 500, error: 'Error saving trip' });
     // }
 
-    const savedTrip = tripRows[0];
+    // const savedTrip = rows[0];
 
     const response = {
       status: 201,
       data: {
-        trip_id: savedTrip.id,
-        bus_id: savedTrip.bus_id,
-        origin: savedTrip.origin,
-        destination: savedTrip.destination,
-        trip_date: savedTrip.trip_date,
-        fare: savedTrip.fare
+        // trip_id: savedTrip.id,
+        bus_id: tripData.bus_id,
+        origin: tripData.origin,
+        destination: tripData.destination,
+        trip_date: tripData.trip_date,
+        fare: tripData.fare,
         // status: savedTrip.status,
       },
     };
